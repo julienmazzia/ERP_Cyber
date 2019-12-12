@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+//import Client from'../views/Client.vue'
+import RH from '../views/RH.vue'
 
 Vue.use(VueRouter)
 
@@ -12,14 +14,16 @@ const routes = [
   },
   {
     path: '/client',
-    name: 'client'
+    name: 'client',
+    //component: Client
   },
   {
-    path: '/salarie',
-    name: 'RH'
+    path: '/rh',
+    name: 'RH',
+    component: RH
   },
   {
-    path: '/plannification',
+    path: '/plan',
     name: 'Plan'
   }
 ]
