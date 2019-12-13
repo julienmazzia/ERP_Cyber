@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-//import Client from'../views/Client.vue'
+import Client from'../views/Client.vue'
 import RH from '../views/RH.vue'
+import plan from '../views/Plannification.vue'
+import plans from '../views/Plans.vue'
+import series from '../views/chaines.vue'
+import pieces from '../views/pieces.vue'
 
 Vue.use(VueRouter)
 
@@ -15,7 +19,7 @@ const routes = [
   {
     path: '/client',
     name: 'client',
-    //component: Client
+    component: Client
   },
   {
     path: '/rh',
@@ -24,7 +28,24 @@ const routes = [
   },
   {
     path: '/plan',
-    name: 'Plan'
+    name: 'Plan',
+    component: plan
+  },
+  {
+    path: '/plan/plans',
+    name: 'plans',
+    component: plans
+  },
+  {
+    path: '/plan/chaine',
+    name: 'chaines',
+    component: series
+  },
+  {
+    path: '/plan/plans/:pieces',
+    name: 'pieces',
+    component: pieces,
+    props: true
   }
 ]
 
