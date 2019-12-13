@@ -6,6 +6,7 @@ import RH from '../views/RH.vue'
 import plan from '../views/Plannification.vue'
 import plans from '../views/Plans.vue'
 import series from '../views/chaines.vue'
+import pieces from '../views/pieces.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,12 @@ const routes = [
     path: '/plan/chaine',
     name: 'chaines',
     component: series
+  },
+  {
+    path: '/plan/plans/:pieces',
+    name: 'pieces',
+    component: pieces,
+    props: true
   }
 ]
 

@@ -13,7 +13,9 @@
                     <b-col cols="3">{{ plan.name }}</b-col>
                     <b-col cols="3">{{ plan.for }}</b-col>
                     <b-col cols="3">
-                        <b-button variant="warning">Voir les plans</b-button>
+                        <router-link :to="{ name: 'pieces', params: { pieces: plan.pieces } }">
+                            <b-button variant="warning">Voir les pièces</b-button>
+                        </router-link> 
                     </b-col>
                 </b-row>
             </div>
