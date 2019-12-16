@@ -7,3 +7,15 @@ public/
 .deploy*/
 src/_drafts
 package-lock.json
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
