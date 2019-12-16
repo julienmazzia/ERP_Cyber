@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-button v-b-modal.Fiche_modal>Ajouter</b-button>
     <b-container>
         <div class="table">
 
@@ -12,15 +13,15 @@
             </b-row>
             <div v-for="item in items" v-bind:key="item.id" class="employees">
                 <b-row>
-                    <b-col cols="2">{{item.name}}</b-col>
-                    <b-col cols="2">{{item.firstname}}</b-col>
-                    <b-col cols="2">{{item.fonction}}</b-col>
-                    <b-col cols="2">{{item.mail}}</b-col>
+                    <b-col cols="2">{{item.NOM}}</b-col>
+                    <b-col cols="2">{{item.PRENOM}}</b-col>
+                    <b-col cols="2">{{item.FONCTION}}</b-col>
+                    <b-col cols="2">{{item.MAIL}}</b-col>
                     <b-col cols="4">
-                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item.id)">
+                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item.ID_EMPLOYE)">
                         Modifier
                         </b-button>
-                        <b-button variant="danger" size="sm"  class="mr-2">
+                        <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(item.ID_EMPLOYE)">
                         Supprimer
                         </b-button>
                     </b-col>
@@ -63,40 +64,90 @@
 
                                 <b-button type="submit" variant="primary">Submit</b-button>
                             </b-form>
-                            <p class="my-4">{{ items[0].Nom }}</p>
                         </b-modal>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
+
   export default {
     data() {
       return {
+          id: null,
+          action: null,
           form: {
           nom: '',
           prenom: '',
           fonction: '',
           mail: ''
         },
-        items: [
-          { id: 0, name: 'Doe', firstname: 'John', fonction: 'Anonyme', mail: 'john.doe@gmail.com' },
-          { id: 1, name: 'Doe', firstname: 'jane', fonction: 'Anonyme', mail: 'jane.doe@gmail.com' }
-        ]
+        items: []
       }
     },
     methods: {
         fillForm(id){
-            this.form.nom = this.items[id].name
-            this.form.prenom = this.items[id].firstname
-            this.form.fonction = this.items[id].fonction
-            this.form.mail = this.items[id].mail
+            this.id = id
+            
+            this.form.nom = this.items[id-1].NOM
+            this.form.prenom = this.items[id-1].PRENOM
+            this.form.fonction = this.items[id-1].FONCTION
+            this.form.mail = this.items[id-1].MAIL
+
+            this.action = "Modify"
 
             this.$bvModal.show('Fiche_modal')
         },
       onSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        if(this.action === "Modify"){
+          axios.post('http://127.0.0.1:8000/Employees/update', {
+            id: this.id,
+            name: this.form.nom,
+            firstname: this.form.prenom,
+            function: this.form.fonction,
+            mail: this.form.mail
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          this.action = null
+        } else {
+        axios.post('http://127.0.0.1:8000/Employees/add', {
+          name: this.form.nom,
+          firstname: this.form.prenom,
+          function: this.form.fonction,
+          mail: this.form.mail
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        }
+      },
+      deleteEmployee(id) {
+        axios.post('http://127.0.0.1:8000/Employees/delete', {
+          id: id
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       }
-    }
+    },
+  mounted () {
+    axios
+      .get('http://127.0.0.1:8000/Employees/getAll')
+      .then(response => {
+        this.items = response.data;
+      })
   }
+}
 </script>

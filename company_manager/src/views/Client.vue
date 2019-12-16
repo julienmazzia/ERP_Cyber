@@ -119,7 +119,6 @@ export default {
             this.$bvModal.show('Fiche_modal')
         },
       onSubmit(evt) {
-          console.log(this.action)
         evt.preventDefault()
         if(this.action === "Modify"){
           axios.post('http://127.0.0.1:8000/Company/update', {

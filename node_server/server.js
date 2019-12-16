@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
     res.send("done");
   });
 
-  app.post('/Employees/Delete', function (req, res) {
+  app.post('/Employees/delete', function (req, res) {
       sql.query('DELETE FROM Employe WHERE ID_EMPLOYE=' + req.body.id);
       res.send("done");
   });
