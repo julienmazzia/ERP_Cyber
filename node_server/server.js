@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 
 var sql = require('./Connection.js')
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -23,6 +29,7 @@ app.get('/', (req, res) => {
   });
 
   app.post('/Company/add', function (req, res, next) {
+      console.log(req)
       var data = req.body;
       sql.query('INSERT INTO compagnie (NOM, TELEPHONE, MAIL,  ADRESSE, CODE, VILLE) VALUES ( "' + data.name + '", "' + data.tel + '", "' + data.mail  + '","' + data.street + '", "' + data.code +  '", "' + data.city + '");');
       res.end("Done");
@@ -33,6 +40,11 @@ app.get('/', (req, res) => {
     sql.query('UPDATE Compagnie SET Nom = "' + data.name + '", TELEPHONE = "' + data.tel + '", MAIL = "' + data.mail + '", Adresse = "' + data.street + '", CODE ="' + data.code + '", VILLE ="' + data.city + '" WHERE ID_COMPAGNIE = '+ data.id + ';');
     res.end("Done");
   });
+
+  app.post('/Company/delete', function (req, res) {
+    sql.query('DELETE FROM Compagnie WHERE ID_COMPAGNIE=' + req.body.id);
+    res.send("done");
+});
 
   app.get('/Employees/getAll', function (req, res, next) {
     sql.query("Select * from Employe;", function (err, result) {
