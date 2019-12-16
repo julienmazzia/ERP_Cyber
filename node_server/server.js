@@ -113,6 +113,8 @@ app.get('/', (req, res) => {
   });
 
   app.post('/Plan/delete', function(req, res) {
+      sql.query('DELETE FROM Assemblage  WHERE ID_PLAN =' + req.body.id);
+      sql.query('DELETE FROM Composition_plan  WHERE ID_PLAN =' + req.body.id);
       sql.query('DELETE FROM Plan  WHERE ID_PLAN =' + req.body.id);
       res.send("Done");
   });
