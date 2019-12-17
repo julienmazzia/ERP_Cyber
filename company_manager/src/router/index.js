@@ -43,7 +43,7 @@ const routes = [
     component: series
   },
   {
-    path: '/plan/plans/:pieces',
+    path: '/plan/plans/:id',
     name: 'pieces',
     component: pieces,
     props: true

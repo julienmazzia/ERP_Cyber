@@ -136,19 +136,27 @@ app.get('/', (req, res) => {
     res.send("Done");
 });
 
-app.post('/Plan/updateAssocitation', function(req, res) {
-    var data = req.body;
-    sql.query('Update Composition_plan SET ID_PLAN = ' + data.id_plan + ', ID_PIECE = ' + data.id_piece);
-    res.send("Done");
-});
-
 app.post('/Plan/deleteAssocitation', function(req, res) {
-    sql.query('DELETE FROM Composition_plan  WHERE ID_COMPOSITION_PLAN =' + req.body.id);
+    sql.query('DELETE FROM Composition_plan  WHERE ID_PIECE =' + req.body.id);
     res.send("Done");
 });
 
   app.get('/Piece/getAll', function (req, res, next) {
     sql.query("Select * from Piece", function (err, result) {
+
+        if(err) {
+            console.log("error: ", err);
+        }
+        else{
+          res.end(JSON.stringify(result));
+        }
+      }); 
+  });
+
+  app.post('/Piece/getPiece', function (req, res, next) {
+    var data = req.body
+
+    sql.query("Select * from Piece WHERE ID_PIECE =" + data.id, function (err, result) {
 
         if(err) {
             console.log("error: ", err);

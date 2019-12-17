@@ -14,7 +14,7 @@
                 <b-row>
                     <b-col cols="2">{{item.ID_PIECE}}</b-col>
                     <b-col cols="2">{{item.NOM}}</b-col>
-                    <b-col cols="2">{{item.PRIX}}</b-col>
+                    <b-col cols="2">{{item.PRIX}} €</b-col>
                     <b-col cols="4">
                         <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item.ID_PIECE)">
                         Modifier
