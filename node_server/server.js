@@ -29,7 +29,6 @@ app.get('/', (req, res) => {
   });
 
   app.post('/Company/add', function (req, res, next) {
-      console.log(req)
       var data = req.body;
       sql.query('INSERT INTO compagnie (NOM, TELEPHONE, MAIL,  ADRESSE, CODE, VILLE) VALUES ( "' + data.name + '", "' + data.tel + '", "' + data.mail  + '","' + data.street + '", "' + data.code +  '", "' + data.city + '");');
       res.end("Done");
@@ -196,6 +195,32 @@ app.post('/Plan/deleteAssocitation', function(req, res) {
       }); 
   });
 
+  app.post('/Series/getElements', function (req, res) {
+    var data = req.body
+    if(data.type === "Assemblage") {
+      sql.query('Select * from Assemblage WHERE ID_CHAINE=' + data.id, function (err, result) {
+
+        if(err) {
+            console.log("error: ", err);
+        }
+        else{
+          res.end(JSON.stringify(result));
+        }
+      }); 
+      res
+    } else {
+      sql.query('Select * from Production WHERE ID_CHAINE=' + data.id, function (err, result) {
+
+        if(err) {
+            console.log("error: ", err);
+        }
+        else{
+          res.end(JSON.stringify(result));
+        }
+      }); 
+    }
+  })
+
   app.post('/Series/add', function(req, res) {
     var data = req.body;
     sql.query('INSERT INTO Chaine (TYPE) VALUES("' + data.type + '");');
@@ -216,9 +241,9 @@ app.post('/Plan/deleteAssocitation', function(req, res) {
     app.post('/Series/addProduct', function(req, res) {
         var data = req.body;
         if(data.type === "Assemblage") {
-            sql.query('INSERT INTO Assemblage (ID_CHAINE, ID_PLAN) VALUES (' + data.id_chaine + ', ' + data.id_plan + ')');
+            sql.query('INSERT INTO Assemblage (ID_CHAINE, ID_PLAN) VALUES (' + data.id_chaine + ', ' + data.id + ')');
         } else {
-            sql.query('INSERT INTO Production (ID_CHAINE, ID_PIECE) VALUES (' + data.id_chaine + ', ' + data.id_piece + ')');
+            sql.query('INSERT INTO Production (ID_CHAINE, ID_PIECE) VALUES (' + data.id_chaine + ', ' + data.id + ')');
         }
         res.send("Done");
     });
@@ -226,9 +251,9 @@ app.post('/Plan/deleteAssocitation', function(req, res) {
     app.post('/Series/removeProduct', function(req, res) {
         var data = req.body;
         if(data.type === "Assemblage") {
-            sql.query('DELETE FROM Assemblage WHERE ID_CHAINE =' + data.id_chaine + ' AND ID_PLAN =' + data.id_plan);
+            sql.query('DELETE FROM Assemblage WHERE ID_CHAINE =' + data.id_chaine + ' AND ID_PLAN =' + data.id);
         } else {
-            sql.query('DELETE FROM Production WHERE ID_CHAINE =' + data.id_chaine + 'AND ID_PIECE =' + data.id_piece);
+            sql.query('DELETE FROM Production WHERE ID_CHAINE =' + data.id_chaine + 'AND ID_PIECE =' + data.id);
         }
         res.send("Done");
     });

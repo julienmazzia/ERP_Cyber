@@ -125,9 +125,7 @@ export default {
     axios
       .get('http://127.0.0.1:8000/Plan/getAll')
       .then(response => {
-          console.log(response)
         this.plans = response.data;
-        console.log(this.plans)
       })
   }
 }
