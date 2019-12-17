@@ -5,6 +5,7 @@
             <div class="table">
 
                 <b-row>
+                    <b-col cols="2">ID assemblage</b-col>
                     <b-col cols="2">Désignation</b-col>
                     <b-col cols="2">Prix</b-col>
                     <b-col cols="4">Modifier</b-col>
@@ -14,7 +15,7 @@
                         <b-col cols="2">{{item.NOM}}</b-col>
                         <b-col cols="2">{{item.PRIX}} €</b-col>
                         <b-col cols="4">
-                            <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(item.ID_PIECE)">
+                            <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(item.ID_COMPOSITION_PLAN)">
                             Supprimer
                             </b-button>
                         </b-col>
@@ -106,7 +107,12 @@ export default {
                 id: PieceTable[i].ID_PIECE
             })
             .then(function (response) {
-                that.items.push(response.data[0]);
+                var data = {
+                    ID_COMPOSITION_PLAN: PieceTable[i].ID_COMPOSITION_PLAN,
+                    NOM: response.data[0].NOM,
+                    PRIX: response.data[0].PRIX
+                }
+                that.items.push(data);
             })
             .catch(function (error) {
             console.log(error);

@@ -137,7 +137,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/Plan/deleteAssocitation', function(req, res) {
-    sql.query('DELETE FROM Composition_plan  WHERE ID_PIECE =' + req.body.id);
+    sql.query('DELETE FROM Composition_plan  WHERE ID_COMPOSITION_PLAN =' + req.body.id);
     res.send("Done");
 });
 
