@@ -7,6 +7,7 @@ import plan from '../views/Plannification.vue'
 import plans from '../views/Plans.vue'
 import series from '../views/chaines.vue'
 import pieces from '../views/pieces.vue'
+import piecesList from '../views/Pieces-list.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,11 @@ const routes = [
     name: 'pieces',
     component: pieces,
     props: true
+  },
+  {
+    path: '/pieces',
+    name: 'piecesList',
+    component: piecesList
   }
 ]
 

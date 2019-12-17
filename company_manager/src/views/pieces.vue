@@ -19,6 +19,6 @@
 
 <script>
 export default {
-    props: ['pieces']
+    props: ['id']
 }
 </script>
