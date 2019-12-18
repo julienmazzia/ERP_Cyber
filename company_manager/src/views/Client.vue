@@ -22,12 +22,12 @@
                     <b-col cols="1">{{ client.CODE }}</b-col>
                     <b-col cols="1">{{ client.VILLE }}</b-col>
                     <b-col cols="2">
-                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(client.ID_COMPAGNIE)">
+                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(client)">
                         Modifier
                         </b-button>
-                        <b-button variant="danger" size="sm"  class="mr-2" @click="deleteClient(client.ID_COMPAGNIE)">
+                        <!-- <b-button variant="danger" size="sm"  class="mr-2" @click="deleteClient(client.ID_COMPAGNIE)">
                         Supprimer
-                        </b-button>
+                        </b-button> -->
                     </b-col>
                 </b-row>
             </div>
@@ -106,14 +106,14 @@ export default {
     }
   },
   methods: {
-        fillForm(id){
-            this.id = id
-            this.form.nom = this.clients[id-1].NOM
-            this.form.tel = this.clients[id-1].TELEPHONE
-            this.form.mail = this.clients[id-1].MAIL
-            this.form.adresse = this.clients[id-1].ADRESSE
-            this.form.code = this.clients[id-1].CODE
-            this.form.ville = this.clients[id-1].VILLE
+        fillForm(client){
+            this.id = client.ID_COMPANY
+            this.form.nom = client.NOM
+            this.form.tel = client.TELEPHONE
+            this.form.mail = client.MAIL
+            this.form.adresse = client.ADRESSE
+            this.form.code = client.CODE
+            this.form.ville = client.VILLE
 
             this.action = 'Modify'
             this.$bvModal.show('Fiche_modal')
@@ -131,7 +131,7 @@ export default {
             city: this.form.ville
           })
           .then(function (response) {
-            console.log(response);
+            console.log(response)
           })
           .catch(function (error) {
             console.log(error);
@@ -147,24 +147,26 @@ export default {
           city: this.form.ville
         })
         .then(function (response) {
-          console.log(response);
+          console.log(response)
         })
         .catch(function (error) {
           console.log(error);
         });
         }
+        location.reload(true);
       },
-      deleteClient(id) {
-        axios.post('http://127.0.0.1:8000/Company/delete', {
-          id: id
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      }
+      // deleteClient(id) {
+      //   axios.post('http://127.0.0.1:8000/Company/delete', {
+      //     id: id
+      //   })
+      //   .then(function (response) {
+      //     console.log(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   })
+      //   location.reload(true);
+      // }
     },
   mounted () {
     axios

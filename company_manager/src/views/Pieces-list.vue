@@ -16,7 +16,7 @@
                     <b-col cols="2">{{item.NOM}}</b-col>
                     <b-col cols="2">{{item.PRIX}} €</b-col>
                     <b-col cols="4">
-                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item.ID_PIECE)">
+                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item)">
                         Modifier
                         </b-button>
                         <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(item.ID_PIECE)">
@@ -68,11 +68,11 @@
       }
     },
     methods: {
-        fillForm(id){
-            this.id = id
+        fillForm(item){
+            this.id = item.ID_PIECE
             
-            this.form.nom = this.items[id-1].NOM
-            this.form.prix = this.items[id-1].PRIX
+            this.form.nom = item.NOM
+            this.form.prix = item.PRIX
 
             this.action = "Modify"
 
@@ -105,6 +105,7 @@
           console.log(error);
         });
         }
+        location.reload(true);
       },
       deleteEmployee(id) {
         axios.post('http://127.0.0.1:8000/Piece/delete', {
@@ -116,6 +117,7 @@
         .catch(function (error) {
           console.log(error);
         });
+        location.reload(true);
       }
     },
   mounted () {

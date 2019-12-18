@@ -15,13 +15,17 @@
                         Supprimer
                         </b-button>
                     </b-col>
-                <b-row>
-                    <b-col> {{ getProducts(serie.ID_CHAINE) }} </b-col>
-                </b-row>
             </b-row>
-            
     
         </div>
+
+            <b-row v-for="pieces in elements2" v-bind:key="pieces.id">
+                <b-col cols="3" v-for="piece in pieces" v-bind:key="piece.id">La chaine n°{{piece.ID_CHAINE}} produit la pièce {{ piece.ID_PIECE }}</b-col>
+            </b-row>
+            <div>--------------------------</div>
+            <b-row v-for="plans in elements" v-bind:key="plans.id">
+                <b-col v-for="plan in plans" v-bind:key="plan.id">La chaine n°{{ plan.ID_CHAINE }} produit le plan {{ plan.ID_PLAN }} </b-col>
+            </b-row>
     </b-container>
 
     <b-modal id="List_prod" title="Liste de production">
@@ -52,6 +56,7 @@ export default {
             index: 0,
             series: [],
             elements: [],
+            elements2: [],
             data: [],
             type: null,
             idProd: null,
@@ -114,10 +119,10 @@ export default {
                     type: this.type
                 })
                 .then(function (response) {
-                    console.log(response);
+                    console.log(response)
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log(error)
                 });
                 this.action = null
             } else if(this.action === "AddProd"){
@@ -128,10 +133,10 @@ export default {
                     type: this.type
                 })
                 .then(function (response) {
-                    console.log(response);
+                    console.log(response)
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log(error)
                 });
                 this.action = null
             } else {
@@ -139,23 +144,25 @@ export default {
                     type: this.type
                 })
                 .then(function (response) {
-                    console.log(response);
+                    console.log(response)
                 })
                 .catch(function (error) {
-                    console.log(error);
-                });
+                    console.log(error)
+                })
             }
+            location.reload(true);
       },
       deleteSerie(id) {
           axios.post('http://127.0.0.1:8000/Series/delete', {
           id: id
         })
         .then(function (response) {
-          console.log(response);
+          console.log(response)
         })
         .catch(function (error) {
           console.log(error);
-        });
+        })
+        location.reload(true);
       }
     },
     mounted () {
@@ -193,9 +200,12 @@ export default {
                 })
                 .then(function (response) {
                         if (response.data[0] !== undefined) {
-                            that.elements.push({
-                                id: response.data[0].ID_PLAN
-                            })
+
+                        that.elements.push(response.data)
+                            // that.elements.push({
+                            //     id_chaine: response.data[0].ID_CHAINE,
+                            //     id: response.data[0].ID_PLAN
+                            // })
                         }
                 })
                 .catch(function (error) {
@@ -208,9 +218,12 @@ export default {
                 })
                 .then(function (response) {
                     if (response.data[0] !== undefined) {
-                        that.elements.push({
-                            id: response.data[0].ID_PIECE
-                        })
+                        //console.log(response.data)
+                        that.elements2.push(response.data)
+                        // that.elements2.push({
+                        //     id_chaine: response.data[0].ID_CHAINE,
+                        //     id: response.data[0].ID_PIECE
+                        // })
                     }
                 })
                 .catch(function (error) {

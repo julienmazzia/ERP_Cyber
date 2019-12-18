@@ -21,7 +21,7 @@
                         </router-link> 
                     </b-col>
                     <b-col cols="3">
-                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(plan.ID_PLAN)">
+                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(plan)">
                         Modifier
                         </b-button>
                         <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(plan.ID_PLAN)">
@@ -71,11 +71,11 @@ export default {
       }
     },
     methods: {
-        fillForm(id){
-            this.id = id
+        fillForm(plan){
+            this.id = plan.ID_PLAN
             
-            this.form.des = this.plans[id-1].DESIGNATION
-            this.form.id = this.plans[id-1].ID_COMPAGNIE
+            this.form.des = plan.DESIGNATION
+            this.form.id = plan.ID_COMPAGNIE
 
             this.action = "Modify"
 
@@ -108,6 +108,7 @@ export default {
           console.log(error);
         });
         }
+        location.reload(true);
       },
       deleteEmployee(id) {
         axios.post('http://127.0.0.1:8000/Plan/delete', {
@@ -119,6 +120,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+        location.reload(true);
       }
     },
   mounted () {

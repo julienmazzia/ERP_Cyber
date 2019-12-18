@@ -62,7 +62,8 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
-        });
+        })
+        location.reload(true);
       },
       deleteEmployee(id) {
         axios.post('http://127.0.0.1:8000/Plan/deleteAssocitation', {
@@ -73,7 +74,8 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
-        });
+        })
+        location.reload(true);
       },
       getTotal() {
           var total = 0

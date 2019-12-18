@@ -18,7 +18,7 @@
                     <b-col cols="2">{{item.FONCTION}}</b-col>
                     <b-col cols="2">{{item.MAIL}}</b-col>
                     <b-col cols="4">
-                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item.ID_EMPLOYE)">
+                        <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item)">
                         Modifier
                         </b-button>
                         <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(item.ID_EMPLOYE)">
@@ -86,13 +86,13 @@
       }
     },
     methods: {
-        fillForm(id){
-            this.id = id
+        fillForm(item){
+            this.id = item.ID_EMPLOYE
             
-            this.form.nom = this.items[id-1].NOM
-            this.form.prenom = this.items[id-1].PRENOM
-            this.form.fonction = this.items[id-1].FONCTION
-            this.form.mail = this.items[id-1].MAIL
+            this.form.nom = item.NOM
+            this.form.prenom = item.PRENOM
+            this.form.fonction = item.FONCTION
+            this.form.mail = item.MAIL
 
             this.action = "Modify"
 
@@ -129,6 +129,7 @@
           console.log(error);
         });
         }
+        location.reload(true);
       },
       deleteEmployee(id) {
         axios.post('http://127.0.0.1:8000/Employees/delete', {
@@ -139,7 +140,8 @@
         })
         .catch(function (error) {
           console.log(error);
-        });
+        })
+        location.reload(true);
       }
     },
   mounted () {
