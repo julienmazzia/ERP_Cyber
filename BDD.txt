@@ -1,0 +1,244 @@
+create database cyber;  
+
+use cyber;
+
+create table Compagnie (ID_COMPAGNIE INT primary Key not null auto_increment, NOM varchar(250) not null, TELEPHONE varchar(250) not null, MAIL varchar(250) not null, ADRESSE varchar(250) not null, CODE varchar(250) not null, VILLE varchar(250) not null);
+
+create table Employe (ID_EMPLOYE INT primary Key not null auto_increment, NOM varchar(250) not null, PRENOM varchar(250) not null, FONCTION varchar(250) not null, MAIL varchar(250) not null);
+
+create table Plan (ID_PLAN INT primary Key not null auto_increment, DESIGNATION varchar(250) not null, ID_COMPAGNIE INT not null, FOREIGN KEY (ID_COMPAGNIE) REFERENCES Compagnie(ID_COMPAGNIE));
+
+create table Piece (ID_PIECE INT primary Key not null auto_increment, NOM varchar(250) not null, PRIX INT not null);
+
+create table Chaine(ID_CHAINE INT primary Key not null auto_increment, TYPE varchar(250));
+
+create table Assemblage(ID_ASSEMBLAGE INT primary Key not null auto_increment, ID_CHAINE INT not null, ID_PLAN INT not null, FOREIGN KEY (ID_CHAINE) REFERENCES Chaine(ID_CHAINE), FOREIGN KEY (ID_PLAN) REFERENCES Plan(ID_PLAN));
+
+create table Production(ID_PRODUCTION INT primary Key not null auto_increment, ID_CHAINE INT not null, ID_PIECE INT not null, FOREIGN KEY (ID_CHAINE) REFERENCES Chaine(ID_CHAINE), FOREIGN KEY (ID_PIECE) REFERENCES Piece(ID_PIECE));
+
+create table Composition_plan(ID_COMPOSITION_PLAN INT primary Key not null auto_increment, ID_PLAN INT not null, ID_PIECE INT not null, FOREIGN KEY (ID_PLAN) REFERENCES Plan(ID_PLAN), FOREIGN KEY (ID_PIECE) REFERENCES Piece(ID_PIECE));
+
+
+INSERT INTO
+  compagnie (NOM, TELEPHONE, MAIL,  ADRESSE, CODE, VILLE)
+VALUES
+  (
+    " Airbus ",
+    " + 336066819 ",
+    " contact@airbus.com ",
+    " 5 rue Lagardiere ",
+    " 56000 ",
+    " Blagnac "
+  );
+
+INSERT INTO
+  compagnie (NOM, TELEPHONE, MAIL,  ADRESSE, CODE, VILLE)
+VALUES
+  (
+    " EDF ",
+    " + 33659819 ",
+    " contact@EDF.com ",
+    " 3 place de la bastille ",
+    " 49000 ",
+    " Tours "
+  );
+
+INSERT INTO
+	Employe (NOM, PRENOM, FONCTION, MAIL)
+VALUES
+ (
+	"Lafonte",
+	"Georges",
+	"SI",
+	"georges.lafonte@gmail.com"
+);
+
+ INSERT INTO
+	Employe (NOM, PRENOM, FONCTION, MAIL)
+VALUES
+ (
+	"Kali",
+	"Evelyne",
+	"RH",
+	"evelyne.kali@gmail.com"
+);
+
+ INSERT INTO
+ 	Plan (DESIGNATION, ID_COMPAGNIE)
+ VALUES
+ (
+ 	"Train d'atterissage",
+ 	1
+ 	);
+
+ INSERT INTO
+ 	Plan (DESIGNATION, ID_COMPAGNIE)
+ VALUES
+ (
+ 	"Cuve de refroidissment",
+ 	2
+ 	);
+
+ INSERT INTO
+ 	PIECE (NOM, PRIX)
+ VALUES 
+ (
+ 	"Cables electriques",
+ 	"3500"
+ 	);
+
+  INSERT INTO
+ 	PIECE (NOM, PRIX)
+ VALUES 
+ (
+ 	"Barre en acier",
+ 	"4500"
+ 	);
+
+ INSERT INTO
+ 	PIECE (NOM, PRIX)
+ VALUES 
+ (
+ 	"Beton",
+ 	"4500"
+ 	);
+
+  INSERT INTO
+ 	PIECE (NOM, PRIX)
+ VALUES 
+ (
+ 	"Structure en metal",
+ 	"12000"
+ 	);
+
+  INSERT INTO
+ 	PIECE (NOM, PRIX)
+ VALUES 
+ (
+ 	"tuyaux",
+ 	"5600"
+ 	);
+
+ INSERT INTO
+ 	Chaine (TYPE)
+ VALUES
+ (
+ 	"Production"
+ 	);
+
+ INSERT INTO
+ 	Chaine (TYPE)
+ VALUES
+ (
+ 	"Production"
+ 	);
+
+  INSERT INTO
+ 	Chaine (TYPE)
+ VALUES
+ (
+ 	"Assemblage"
+ 	);
+
+  INSERT INTO
+ 	Chaine (TYPE)
+ VALUES
+ (
+ 	"Assemblage"
+ 	);
+
+ INSERT INTO
+ 	Composition_plan (ID_PLAN, ID_PIECE)
+ VALUES
+ (
+ 	1,
+ 	1
+ 	);
+
+ INSERT INTO
+ 	Composition_plan (ID_PLAN, ID_PIECE)
+ VALUES
+ (
+ 	1,
+ 	2
+ 	);
+
+ INSERT INTO
+ 	Composition_plan (ID_PLAN, ID_PIECE)
+ VALUES
+ (
+ 	2,
+ 	3
+ 	);
+
+  INSERT INTO
+ 	Composition_plan (ID_PLAN, ID_PIECE)
+ VALUES
+ (
+ 	2,
+ 	4
+ 	);
+
+  INSERT INTO
+ 	Composition_plan (ID_PLAN, ID_PIECE)
+ VALUES
+ (
+ 	2,
+ 	5
+ 	);
+
+ INSERT INTO
+ 	Production(ID_CHAINE, ID_PIECE)
+ VALUES
+ (
+ 	1,
+ 	1
+ 	);
+
+ INSERT INTO
+ 	Production(ID_CHAINE, ID_PIECE)
+ VALUES
+ (
+ 	1,
+ 	2
+ 	);
+
+ INSERT INTO
+ 	Production(ID_CHAINE, ID_PIECE)
+ VALUES
+ (
+ 	2,
+ 	3
+ 	);
+
+ INSERT INTO
+ 	Production(ID_CHAINE, ID_PIECE)
+ VALUES
+ (
+ 	2,
+ 	4
+ 	);
+
+ INSERT INTO
+ 	Production(ID_CHAINE, ID_PIECE)
+ VALUES
+ (
+ 	2,
+ 	5
+ 	);
+
+ INSERT INTO
+ 	Assemblage(ID_CHAINE, ID_PLAN)
+ VALUES
+ (
+ 	3,
+ 	1
+ 	);
+
+ INSERT INTO
+ 	Assemblage(ID_CHAINE, ID_PLAN)
+ VALUES
+ (
+ 	4,
+ 	2
+ 	);
