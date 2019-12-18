@@ -5,23 +5,21 @@
         <div class="table">
 
             <b-row>
+                <b-col cols="2">ID</b-col>
                 <b-col cols="2">Nom</b-col>
-                <b-col cols="2">Prénom</b-col>
-                <b-col cols="2">Fonction</b-col>
-                <b-col cols="2">Mail</b-col>
+                <b-col cols="2">Prix</b-col>
                 <b-col cols="4">Modifier</b-col>
             </b-row>
             <div v-for="item in items" v-bind:key="item.id" class="employees">
                 <b-row>
+                    <b-col cols="2">{{item.ID_PIECE}}</b-col>
                     <b-col cols="2">{{item.NOM}}</b-col>
-                    <b-col cols="2">{{item.PRENOM}}</b-col>
-                    <b-col cols="2">{{item.FONCTION}}</b-col>
-                    <b-col cols="2">{{item.MAIL}}</b-col>
+                    <b-col cols="2">{{item.PRIX}} €</b-col>
                     <b-col cols="4">
                         <b-button variant="outline-primary" size="sm"  class="mr-2" v-b-modal.modal-1 @click="fillForm(item)">
                         Modifier
                         </b-button>
-                        <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(item.ID_EMPLOYE)">
+                        <b-button variant="danger" size="sm"  class="mr-2" @click="deleteEmployee(item.ID_PIECE)">
                         Supprimer
                         </b-button>
                     </b-col>
@@ -43,21 +41,7 @@
 
                                 <b-form-input
                                 id="input-2"
-                                v-model="form.prenom"
-                                type="text"
-                                required
-                                ></b-form-input>
-
-                                <b-form-input
-                                id="input-3"
-                                v-model="form.fonction"
-                                type="text"
-                                required
-                                ></b-form-input>
-
-                                <b-form-input
-                                id="input-4"
-                                v-model="form.mail"
+                                v-model="form.prix"
                                 type="text"
                                 required
                                 ></b-form-input>
@@ -78,21 +62,17 @@
           action: null,
           form: {
           nom: '',
-          prenom: '',
-          fonction: '',
-          mail: ''
+          prix: ''
         },
         items: []
       }
     },
     methods: {
         fillForm(item){
-            this.id = item.ID_EMPLOYE
+            this.id = item.ID_PIECE
             
             this.form.nom = item.NOM
-            this.form.prenom = item.PRENOM
-            this.form.fonction = item.FONCTION
-            this.form.mail = item.MAIL
+            this.form.prix = item.PRIX
 
             this.action = "Modify"
 
@@ -101,12 +81,10 @@
       onSubmit(evt) {
         evt.preventDefault()
         if(this.action === "Modify"){
-          axios.post('http://127.0.0.1:8000/Employees/update', {
+          axios.post('http://127.0.0.1:8000/Piece/update', {
             id: this.id,
             name: this.form.nom,
-            firstname: this.form.prenom,
-            function: this.form.fonction,
-            mail: this.form.mail
+            cost: this.form.prix
           })
           .then(function (response) {
             console.log(response);
@@ -116,11 +94,9 @@
           });
           this.action = null
         } else {
-        axios.post('http://127.0.0.1:8000/Employees/add', {
+        axios.post('http://127.0.0.1:8000/Piece/add', {
           name: this.form.nom,
-          firstname: this.form.prenom,
-          function: this.form.fonction,
-          mail: this.form.mail
+          cost: this.form.prix
         })
         .then(function (response) {
           console.log(response);
@@ -132,7 +108,7 @@
         location.reload(true);
       },
       deleteEmployee(id) {
-        axios.post('http://127.0.0.1:8000/Employees/delete', {
+        axios.post('http://127.0.0.1:8000/Piece/delete', {
           id: id
         })
         .then(function (response) {
@@ -140,13 +116,13 @@
         })
         .catch(function (error) {
           console.log(error);
-        })
+        });
         location.reload(true);
       }
     },
   mounted () {
     axios
-      .get('http://127.0.0.1:8000/Employees/getAll')
+      .get('http://127.0.0.1:8000/Piece/getAll')
       .then(response => {
         this.items = response.data;
       })
